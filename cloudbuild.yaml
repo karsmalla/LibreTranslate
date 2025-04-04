@@ -1,0 +1,13 @@
+steps:
+  # Build the Docker image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/libretranslate:$SHORT_SHA', '.']
+    waitFor: ['-']
+
+  # Push the Docker image to Google Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/libretranslate:$SHORT_SHA']
+    waitFor: ['0']
+
+images:
+  - 'gcr.io/$PROJECT_ID/libretranslate:$SHORT_SHA'
